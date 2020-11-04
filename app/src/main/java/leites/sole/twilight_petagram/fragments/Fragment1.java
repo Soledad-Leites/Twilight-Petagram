@@ -19,13 +19,15 @@ import leites.sole.twilight_petagram.R;
 import leites.sole.twilight_petagram.adapter.MascotaAdaptador;
 import leites.sole.twilight_petagram.interfaz.IComunicaFragments;
 import leites.sole.twilight_petagram.pojo.Mascotas;
+import leites.sole.twilight_petagram.presentador.IRecyclerViewF1Presenter;
+import leites.sole.twilight_petagram.presentador.RecyclerViewF1Presenter;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Fragment1#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment1 extends Fragment {
+public class Fragment1 extends Fragment implements IRecyclerViewF1 {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,10 +38,9 @@ public class Fragment1 extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    ArrayList<Mascotas> mascotas;
     RecyclerView recyclerInicial;
     Activity activity;
-    IComunicaFragments interfaceComunicaFragments;
+    private IRecyclerViewF1Presenter presenter;
 
     public Fragment1() {
         // Required empty public constructor
@@ -76,40 +77,25 @@ public class Fragment1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_1, container, false);
-        mascotas = new ArrayList<>();
         recyclerInicial = vista.findViewById(R.id.rcId);
-        recyclerInicial.setLayoutManager(new LinearLayoutManager(getContext()));
-        inicializarListaMascotas();
-        MascotaAdaptador adapter = new MascotaAdaptador(mascotas);
-        recyclerInicial.setAdapter(adapter);
-        onAttach();
-
+        presenter = new RecyclerViewF1Presenter(this, getContext());
 
         return vista;
     }
 
-    private void onAttach() {
+    @Override
+    public void generarLinearLayoutVertical() {
+        recyclerInicial.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof Activity){
-            this.activity=(Activity)context;
-          //  interfaceComunicaFragments= (IComunicaFragments) this.activity;
-        }
+    @Override
+    public MascotaAdaptador crearAdaptador(ArrayList<Mascotas> mascotas) {
+        MascotaAdaptador adapter = new MascotaAdaptador(mascotas, activity);
+        return adapter;
     }
 
-    private void inicializarListaMascotas() {
-        mascotas.add(new Mascotas("Lolo", "2", R.drawable.tuki));
-        mascotas.add(new Mascotas("Eugenia","9", R.drawable.turtle));
-        mascotas.add(new Mascotas("Fernan", "6", R.drawable.cangre));
-        mascotas.add(new Mascotas("Georgia","1", R.drawable.pez));
-        mascotas.add(new Mascotas("Helgua", "7", R.drawable.polarpolls));
-        mascotas.add(new Mascotas("Pipi", "12", R.drawable.pajaro));
-        mascotas.add(new Mascotas("Moyo", "14", R.drawable.oveja));
+    @Override
+    public void inicializarAdaptadorRV(MascotaAdaptador adapter) {
+        recyclerInicial.setAdapter(adapter);
     }
-    
-    
-
-
 }

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import leites.sole.twilight_petagram.R;
 import leites.sole.twilight_petagram.pojo.Mascotas;
 
-public class GridAdaptador extends RecyclerView.Adapter<GridAdaptador.MascotaViewHolder>{
+public class GridAdaptador extends RecyclerView.Adapter<GridAdaptador.LasMascotasViewHolder>{
 
     ArrayList<Mascotas> mascotas;
     Activity activity;
@@ -28,18 +28,19 @@ public class GridAdaptador extends RecyclerView.Adapter<GridAdaptador.MascotaVie
 
     @NonNull
     @Override //INFLA ELLAYOUT Y LO PASARA AL VIEWHOLDER PARA QUE OBTENGA LOS DATOS SOLICITADOS EN EL METODO onBindViewHolder
-    public GridAdaptador.MascotaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GridAdaptador.LasMascotasViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.detalle_grid, null, false);
-        return new GridAdaptador.MascotaViewHolder(v);
+        return new GridAdaptador.LasMascotasViewHolder(v);
 
     }
 
 
     @Override //ASOCIA CADA ELEMENTO DE LA LISTA CON CADA VIEW
-    public void onBindViewHolder(@NonNull final GridAdaptador.MascotaViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final GridAdaptador.LasMascotasViewHolder holder, int position) {
 
         holder.imgFoto.setImageResource(mascotas.get(position).getImagen());
-        holder.tvHuesoAmarillo.setText(mascotas.get(position).getFavorito());
+       // holder.tvHuesoAmarillo.setText(mascotas.get(position).getlikes());
+        holder.tvHuesoAmarillo.setText(String.valueOf(mascotas.get(position).getlikes()) + " Likes");
 
     }
 
@@ -49,12 +50,12 @@ public class GridAdaptador extends RecyclerView.Adapter<GridAdaptador.MascotaVie
     }
 
 
-    public static class MascotaViewHolder extends RecyclerView.ViewHolder{
+    public static class LasMascotasViewHolder extends RecyclerView.ViewHolder{
 
         public AppCompatImageView imgFoto;
         public AppCompatTextView tvHuesoAmarillo;
 
-        public MascotaViewHolder(@NonNull View itemView) {
+        public LasMascotasViewHolder(@NonNull View itemView) {
             super(itemView);
             imgFoto         = (AppCompatImageView) itemView.findViewById(R.id.imgFoto);
             tvHuesoAmarillo    = (AppCompatTextView) itemView.findViewById(R.id.tvHuesoAmarillo);

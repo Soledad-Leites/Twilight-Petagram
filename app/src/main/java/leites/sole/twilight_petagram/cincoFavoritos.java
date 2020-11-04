@@ -1,5 +1,6 @@
 package leites.sole.twilight_petagram;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,19 +16,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import leites.sole.twilight_petagram.adapter.CincoFavoritosAdaptador;
 import leites.sole.twilight_petagram.adapter.MascotaAdaptador;
+import leites.sole.twilight_petagram.interfaz.ICincoFavsView;
 import leites.sole.twilight_petagram.menues.AcercaDe;
 import leites.sole.twilight_petagram.menues.contactoForm;
 import leites.sole.twilight_petagram.pojo.Mascotas;
+import leites.sole.twilight_petagram.presentador.ICincoFavoritosPresenter;
 
-public class cincoFavoritos extends AppCompatActivity {
+public class cincoFavoritos extends AppCompatActivity implements ICincoFavsView {
 
     ArrayList<Mascotas> mascotas;
     private RecyclerView rvFavoritos;
-    public MascotaAdaptador adaptador;
+    public CincoFavoritosAdaptador adaptador;
     Toolbar toolbar;
+    Activity activity;
+    private ICincoFavoritosPresenter presenter;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,21 +40,12 @@ public class cincoFavoritos extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setLogo(R.drawable.ic_baseline_pets_24);
-        //SetSupportActionBar(toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         rvFavoritos = (RecyclerView) findViewById(R.id.rvFavoritos);
-
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-
-        rvFavoritos.setLayoutManager(llm);
-        inicializarListaContactos();
-        inicializarAdaptador();
 
     }
 
@@ -75,21 +71,27 @@ public class cincoFavoritos extends AppCompatActivity {
        return super.onOptionsItemSelected(item);
     }
 
-    public void inicializarAdaptador(){
-        MascotaAdaptador adaptador = new MascotaAdaptador(mascotas);
+
+    @Override
+    public void generarLinearLayoutVertical() {
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        rvFavoritos.setLayoutManager(llm);
+
+    }
+
+    @Override
+    public CincoFavoritosAdaptador crearAdaptador(ArrayList<Mascotas> mascotas) {
+        CincoFavoritosAdaptador adaptador;
+        adaptador = new CincoFavoritosAdaptador(mascotas, this);
+        return adaptador;
+    }
+
+
+    @Override
+    public void inicializarAdaptadorRV(CincoFavoritosAdaptador adaptador) {
         rvFavoritos.setAdapter(adaptador);
     }
-
-    public void inicializarListaContactos(){
-
-        mascotas = new ArrayList<Mascotas>();
-
-        mascotas.add(new Mascotas("Moyo", "14", R.drawable.oveja));
-        mascotas.add(new Mascotas("Pipi", "12", R.drawable.pajaro));
-        mascotas.add(new Mascotas("Eugenia","9", R.drawable.turtle));
-        mascotas.add(new Mascotas("Helgua", "7", R.drawable.polarpolls));
-        mascotas.add(new Mascotas("Fernan", "6", R.drawable.cangre));
-
-    }
 }
+
 

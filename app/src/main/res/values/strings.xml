@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Twilight Petagram</string>
     <string name="nombre">Animal</string>
-    <string name="favorito">3</string>
+    <string name="likes">0 Likes</string>
     <string name="pnombre">nombre</string>
     <string name="pfavorito">favorito</string>
     <string name="contacto">Contacto</string>

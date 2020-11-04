@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,21 +16,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import leites.sole.twilight_petagram.R;
+import leites.sole.twilight_petagram.db.ConstructorMascotas;
 import leites.sole.twilight_petagram.pojo.Mascotas;
 
 public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.MascotaViewHolder> {
 
     ArrayList<Mascotas> mascotas;
-    private View.OnClickListener listener;
     Activity activity;
 
-    public MascotaAdaptador(ArrayList<Mascotas> mascotas){ //METODO CONSTRUCTOR
+    public MascotaAdaptador(ArrayList<Mascotas> mascotas, Activity activity) { //METODO CONSTRUCTOR
         this.mascotas = mascotas;
         this.activity = activity;
     }
 
     @NonNull
-    @Override //INFLA ELLAYOUT Y LO PASARA AL VIEWHOLDER PARA QUE OBTENGA LOS DATOS SOLICITADOS EN EL METODO onBindViewHolder
+    @Override
+    //INFLA ELLAYOUT Y LO PASARA AL VIEWHOLDER PARA QUE OBTENGA LOS DATOS SOLICITADOS EN EL METODO onBindViewHolder
     public MascotaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cada_vista, null, false);
         return new MascotaViewHolder(v);
@@ -37,40 +39,41 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Masc
 
 
     @Override //ASOCIA CADA ELEMENTO DE LA LISTA CON CADA VIEW
-    public void onBindViewHolder(@NonNull final MascotaViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MascotaViewHolder mascotaViewHolder, int position) {
+        final Mascotas mascota = mascotas.get(position);
+        mascotaViewHolder.imgFoto.setImageResource(mascota.getImagen());
+        mascotaViewHolder.tvHuesoBlanco.setText(mascota.getNombre());
+        mascotaViewHolder.tvHuesoAmarillo.setText(String.valueOf(mascota.getlikes()) + " Likes");
+        mascotaViewHolder.btnLike.setOnClickListener(v -> {
 
-        holder.imgFoto.setImageResource(mascotas.get(position).getImagen());
-        holder.tvHuesoBlanco.setText(mascotas.get(position).getNombre());
-        holder.tvHuesoAmarillo.setText(mascotas.get(position).getFavorito());
-        holder.btnLike.setOnClickListener(new View.OnClickListener(){
-              @Override
-              public void onClick(View v) {
-                  Toast.makeText(activity, "Diste like a " + mascotas.get(position).getNombre(),
-                          Toast.LENGTH_SHORT).show();
-              }
+            ConstructorMascotas constructorMascotas = new ConstructorMascotas(activity);
+            constructorMascotas.darLikeMascota(mascota);
+            //mascotaViewHolder.tvHuesoAmarillo.refreshLikes
         });
+
     }
 
-    @Override
-    public int getItemCount() { //CANTIDAD DE ELEMENTOS QUE CONTIENE MI LISTA DE CONTACTOS
-        return mascotas.size();
-    }
-
-
-    public static class MascotaViewHolder extends RecyclerView.ViewHolder{
-
-        public AppCompatImageView imgFoto;
-        public AppCompatTextView tvHuesoBlanco,tvHuesoAmarillo;
-        public AppCompatImageButton btnLike;
-
-        public MascotaViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imgFoto         = (AppCompatImageView) itemView.findViewById(R.id.imgFoto);
-            tvHuesoBlanco      = (AppCompatTextView) itemView.findViewById(R.id.tvHuesoBlanco);
-            tvHuesoAmarillo    = (AppCompatTextView) itemView.findViewById(R.id.tvHuesoAmarillo);
-            btnLike         = (AppCompatImageButton) itemView.findViewById(R.id.btnLike);
-
+        @Override
+        public int getItemCount () { //CANTIDAD DE ELEMENTOS QUE CONTIENE MI LISTA DE CONTACTOS
+            return mascotas.size();
         }
+
+
+        public static class MascotaViewHolder extends RecyclerView.ViewHolder {
+
+            public AppCompatImageView imgFoto;
+            public AppCompatTextView tvHuesoBlanco, tvHuesoAmarillo;
+            public ImageButton btnLike;
+
+            public MascotaViewHolder(@NonNull View itemView) {
+                super(itemView);
+                imgFoto = (AppCompatImageView) itemView.findViewById(R.id.imgFoto);
+                tvHuesoBlanco = (AppCompatTextView) itemView.findViewById(R.id.tvHuesoBlanco);
+                tvHuesoAmarillo = (AppCompatTextView) itemView.findViewById(R.id.tvHuesoAmarillo);
+                btnLike = (ImageButton) itemView.findViewById(R.id.btnLike);
+
+            }
+        }
+
     }
 
-}

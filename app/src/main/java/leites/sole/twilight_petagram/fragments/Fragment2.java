@@ -1,5 +1,6 @@
 package leites.sole.twilight_petagram.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -35,6 +36,7 @@ public class Fragment2 extends Fragment {
     private String mParam2;
 
     ArrayList<Mascotas> mascotas;
+    Activity activity;
     RecyclerView rcDetalle;
 
     public Fragment2() {
@@ -90,11 +92,11 @@ public class Fragment2 extends Fragment {
     }
 
     private void inicializarListaMascotas() {
-        mascotas.add(new Mascotas( "22", R.drawable.oveja2));
-        mascotas.add(new Mascotas("19", R.drawable.oveja3));
-        mascotas.add(new Mascotas( "16", R.drawable.oveja4));
-        mascotas.add(new Mascotas("11", R.drawable.oveja5));
-        mascotas.add(new Mascotas("7", R.drawable.oveja));
+        mascotas.add(new Mascotas( 22, R.drawable.oveja2));
+        mascotas.add(new Mascotas(19, R.drawable.oveja3));
+        mascotas.add(new Mascotas( 16, R.drawable.oveja4));
+        mascotas.add(new Mascotas(11, R.drawable.oveja5));
+        mascotas.add(new Mascotas(7, R.drawable.oveja));
 
     }
 }

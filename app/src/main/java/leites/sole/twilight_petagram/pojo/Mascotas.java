@@ -7,19 +7,32 @@ import android.os.Bundle;
 import java.io.Serializable;
 
 public class Mascotas implements Serializable {
+    private int id;
     private String nombre;
-    private String favorito;
+    private int likes;
     private int imagen;
+    private long orden;
 
-    public Mascotas(String nombre, String favorito, int imagen) {
+    public Mascotas(String nombre,int likes, int imagen, long orden){
         this.nombre = nombre;
-        this.favorito = favorito;
+        this.likes = likes;
+        this.imagen = imagen;
+        this.orden = orden;
+    }
+
+    public Mascotas(String nombre, int likes, int imagen) {
+        this.nombre = nombre;
+        this.likes = likes;
         this.imagen = imagen;
     }
 
-    public Mascotas(String favorito, int imagen){
-        this.favorito = favorito;
+    public Mascotas(int likes, int imagen){
+        this.likes = likes;
         this.imagen = imagen;
+    }
+
+    public Mascotas() {
+
     }
 
     public String getNombre() {
@@ -30,12 +43,12 @@ public class Mascotas implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getFavorito() {
-        return favorito;
+    public int getlikes() {
+        return likes;
     }
 
-    public void setFavorito(String favorito) {
-        this.favorito = favorito;
+    public void setlikes(int likes) {
+        this.likes = likes;
     }
 
     public int getImagen() {
@@ -44,5 +57,17 @@ public class Mascotas implements Serializable {
 
     public void setImagen(int imagen) {
         this.imagen = imagen;
+    }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
+
+    public long getOrden() {
+        return orden;
+    }
+
+    public void setOrden(long orden) {
+        this.orden = orden;
     }
 }
