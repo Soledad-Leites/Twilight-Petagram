@@ -79,13 +79,12 @@ public class ConstructorMascotas {
 
 
     public void darLikeMascota(Mascotas mascota) {
-
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ConstantesBaseDatos.TABLE_PETS, mascota.getId());
+        contentValues.put(ConstantesBaseDatos.TABLE_PETS_ID, mascota.getId());
         mascota.suma();
         contentValues.put((ConstantesBaseDatos.TABLE_PETS_NUMERO_LIKES), (mascota.getlikes()));
         BaseDatos db = new BaseDatos(context);
-       // db.refreshLikes(contentValues);
+        db.refreshLikes(contentValues);
     }
 
     public ArrayList<Mascotas> favoritos(){

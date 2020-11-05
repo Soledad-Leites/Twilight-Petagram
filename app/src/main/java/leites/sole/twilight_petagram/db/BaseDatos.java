@@ -27,7 +27,7 @@ public class BaseDatos extends SQLiteOpenHelper {
                 ConstantesBaseDatos.TABLE_PETS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ConstantesBaseDatos.TABLE_PETS_NOMBRE + " TEXT, " +
                 ConstantesBaseDatos.TABLE_PETS_PIC + " INTEGER, " +
-                ConstantesBaseDatos.TABLE_PETS_NUMERO_LIKES + " INTEGER, " +
+                ConstantesBaseDatos.TABLE_PETS_NUMERO_LIKES + " TEXT, " +
                 ConstantesBaseDatos.TABLE_PETS_NUMERO_LIKES_ORDEN + " TEXT " +
                 ")";
 
@@ -40,22 +40,12 @@ public class BaseDatos extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+        //CREAR EL LISTADO TOTAL DE MASCOTAS EN MAIN
     public void insertarMascotas(ContentValues contentValues) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(ConstantesBaseDatos.TABLE_PETS, null, contentValues);
         db.close();
-
     }
-/*
-    public void refreshLikes(ContentValues contentValues){
-        String query = "UPDATE "+ConstantesBaseDatos.TABLE_PETS+
-                " set "+ConstantesBaseDatos.TABLE_PETS_NUMERO_LIKES+", "+contentValues.getAsInteger(ConstantesBaseDatos.TABLE_PETS_ID)+", "+
-                ConstantesBaseDatos.TABLE_PETS_NUMERO_LIKES_ORDEN+ "= julianday('now')"+
-                "WHERE "+ConstantesBaseDatos.TABLE_PETS_ID+ ", "+contentValues.getAsInteger(ConstantesBaseDatos.TABLE_PETS_NUMERO_LIKES);
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL(query);
-        db.close();
-    }*/
 
     public ArrayList<Mascotas> obtenerTodasLasMascotas(){
         ArrayList<Mascotas> mascotas = new ArrayList<>();
@@ -73,12 +63,24 @@ public class BaseDatos extends SQLiteOpenHelper {
             mascotaActual.setOrden(registros.getString(4));
             mascotas.add(mascotaActual);
         }
-
         db.close();
         return mascotas;
     }
 
+        //BLOQUE PARA ACTUALIZAR LOS LIKES POR CLIC
+    public void refreshLikes(ContentValues contentValues){
+        int id = contentValues.getAsInteger(ConstantesBaseDatos.TABLE_PETS_ID);
+        int nLike =  contentValues.getAsInteger(ConstantesBaseDatos.TABLE_PETS_NUMERO_LIKES);
+        String query = "UPDATE "+ConstantesBaseDatos.TABLE_PETS+
+                " set "+ConstantesBaseDatos.TABLE_PETS_NUMERO_LIKES+" = "+nLike+", "+
+                ConstantesBaseDatos.TABLE_PETS_NUMERO_LIKES_ORDEN+ "= julianday('now')"+
+                "WHERE "+ConstantesBaseDatos.TABLE_PETS_ID + "="+id;
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(query);
+        db.close();
+    }
 
+        //BLOQUE PARA MOSTRAR LOS 5 FAVORITOS
     public ArrayList<Mascotas> losFavoritos(){
         ArrayList<Mascotas> mascotas = new ArrayList<Mascotas>();
         String query = "SELECT * FROM "

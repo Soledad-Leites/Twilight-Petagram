@@ -22,6 +22,7 @@ import leites.sole.twilight_petagram.interfaz.ICincoFavsView;
 import leites.sole.twilight_petagram.menues.AcercaDe;
 import leites.sole.twilight_petagram.menues.contactoForm;
 import leites.sole.twilight_petagram.pojo.Mascotas;
+import leites.sole.twilight_petagram.presentador.CincoFavoritosPresenter;
 import leites.sole.twilight_petagram.presentador.ICincoFavoritosPresenter;
 
 public class cincoFavoritos extends AppCompatActivity implements ICincoFavsView {
@@ -46,6 +47,8 @@ public class cincoFavoritos extends AppCompatActivity implements ICincoFavsView 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         rvFavoritos = (RecyclerView) findViewById(R.id.rvFavoritos);
+
+        presenter = new CincoFavoritosPresenter(this, getBaseContext());
 
     }
 

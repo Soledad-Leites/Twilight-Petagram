@@ -38,8 +38,7 @@ public class Fragment1 extends Fragment implements IRecyclerViewF1 {
     private String mParam1;
     private String mParam2;
 
-    RecyclerView recyclerInicial;
-    Activity activity;
+    private RecyclerView recyclerInicial;
     private IRecyclerViewF1Presenter presenter;
 
     public Fragment1() {
@@ -90,7 +89,8 @@ public class Fragment1 extends Fragment implements IRecyclerViewF1 {
 
     @Override
     public MascotaAdaptador crearAdaptador(ArrayList<Mascotas> mascotas) {
-        MascotaAdaptador adapter = new MascotaAdaptador(mascotas, activity);
+        MascotaAdaptador adapter;
+        adapter = new MascotaAdaptador(mascotas, this);
         return adapter;
     }
 

@@ -18,14 +18,14 @@ public class CincoFavoritosPresenter implements ICincoFavoritosPresenter{
             this.iCincoFavsView = iCincoFavsView;
             this.context = context;
             obtenerMascotasBD();
+            mostrarMascotasRV();
         }
 
 
         @Override
         public void obtenerMascotasBD() {
             constructorMascotas = new ConstructorMascotas(context);
-            mascotas = constructorMascotas.obtenerTodasLasMascotas();
-            mostrarMascotasRV();
+            mascotas = constructorMascotas.favoritos();
         }
 
         @Override

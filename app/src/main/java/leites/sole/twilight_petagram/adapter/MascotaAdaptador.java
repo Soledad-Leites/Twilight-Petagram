@@ -17,16 +17,19 @@ import java.util.ArrayList;
 
 import leites.sole.twilight_petagram.R;
 import leites.sole.twilight_petagram.db.ConstructorMascotas;
+import leites.sole.twilight_petagram.fragments.Fragment1;
+import leites.sole.twilight_petagram.fragments.MainFragment;
 import leites.sole.twilight_petagram.pojo.Mascotas;
 
 public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.MascotaViewHolder> {
 
     ArrayList<Mascotas> mascotas;
     Activity activity;
+    Fragment1 main;
 
-    public MascotaAdaptador(ArrayList<Mascotas> mascotas, Activity activity) { //METODO CONSTRUCTOR
+    public MascotaAdaptador(ArrayList<Mascotas> mascotas, Fragment1 main) { //METODO CONSTRUCTOR
         this.mascotas = mascotas;
-        this.activity = activity;
+        this.main = main;
     }
 
     @NonNull
@@ -44,10 +47,14 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Masc
         mascotaViewHolder.imgFoto.setImageResource(mascota.getImagen());
         mascotaViewHolder.tvHuesoBlanco.setText(mascota.getNombre());
         mascotaViewHolder.tvHuesoAmarillo.setText(String.valueOf(mascota.getlikes()) + " Likes");
-        mascotaViewHolder.btnLike.setOnClickListener(v -> {
-            ConstructorMascotas constructorMascotas = new ConstructorMascotas(activity);
-            constructorMascotas.darLikeMascota(mascota);
-            mascotaViewHolder.tvHuesoAmarillo.setText(String.valueOf(mascota.getlikes()) + " Likes");
+        mascotaViewHolder.btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Mascotas mascota = mascotas.get(position);
+                ConstructorMascotas constructorMascotas = new ConstructorMascotas(main.getContext());
+                constructorMascotas.darLikeMascota(mascota);
+                mascotaViewHolder.tvHuesoAmarillo.setText(String.valueOf(mascota.getlikes()) + " Likes");
+            }
         });
 
     }
