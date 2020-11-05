@@ -44,7 +44,6 @@ public class CincoFavoritosAdaptador extends RecyclerView.Adapter<CincoFavoritos
                 @Override
                 public void onClick(View v) {
                     Mascotas mascota= mascotas.get(position);
-                    //mascota.sumarMeGusta();
                     mascotas.remove(position);
                     mascotas.add(position,mascota);
 
