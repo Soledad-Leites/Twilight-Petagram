@@ -19,7 +19,6 @@ public class RecyclerViewF1Presenter implements IRecyclerViewF1Presenter {
         this.iRecyclerViewF1 = iRecyclerViewF1;
         this.context = context;
         obtenerMascotasBD();
-        mostrarMascotasRV();
     }
 
 
@@ -27,7 +26,7 @@ public class RecyclerViewF1Presenter implements IRecyclerViewF1Presenter {
     public void obtenerMascotasBD() {
         constructorMascotas = new ConstructorMascotas(context);
         mascotas = constructorMascotas.obtenerTodasLasMascotas();
-
+        mostrarMascotasRV();
     }
 
     @Override

@@ -32,6 +32,7 @@ public class BaseDatos extends SQLiteOpenHelper {
                 ")";
 
         db.execSQL(queryCrearTablaMascota);
+
     }
 
     @Override
@@ -54,6 +55,7 @@ public class BaseDatos extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor registros = db.rawQuery(query, null);
 
+
         while (registros.moveToNext()){
             Mascotas mascotaActual = new Mascotas();
             mascotaActual.setId(registros.getInt(0));
@@ -62,6 +64,9 @@ public class BaseDatos extends SQLiteOpenHelper {
             mascotaActual.setlikes(registros.getInt(3));
             mascotaActual.setOrden(registros.getString(4));
             mascotas.add(mascotaActual);
+            if (mascotas.size() > 10){
+                break;
+            }
         }
         db.close();
         return mascotas;

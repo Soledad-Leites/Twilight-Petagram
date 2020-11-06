@@ -19,7 +19,6 @@ public class ConstructorMascotas {
     public ArrayList<Mascotas> obtenerTodasLasMascotas() {
         BaseDatos db = new BaseDatos(context);
         insertarLasMascotas(db);
-
         return db.obtenerTodasLasMascotas();
     }
 
